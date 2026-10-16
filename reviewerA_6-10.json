@@ -1,0 +1,391 @@
+[
+ {
+  "n": 6,
+  "doi": "10.1109/TWC.2019.2946140",
+  "full_text_read": true,
+  "source_url": "https://arxiv.org/pdf/1910.05316",
+  "decision": "include",
+  "criteria_failed": [],
+  "decision_reason": "Edgent is a device-edge co-inference framework (configurator, runtime optimizer, partition + early-exit) with an overview figure, run on Raspberry Pi + edge PC; peer-reviewed IEEE TWC 2019.",
+  "quality": {
+   "Q1": 1,
+   "Q2": 0.5,
+   "Q3": 1,
+   "Q4": 1,
+   "Q5": 1,
+   "Q6": 1,
+   "Q7": 1,
+   "Q8": 1,
+   "Q9": 1,
+   "Q10": 0.5
+  },
+  "quality_total": 9.0,
+  "extraction": {
+   "domain": [
+    "Generic"
+   ],
+   "contribution_type": [
+    "Framework"
+   ],
+   "styles": [
+    "Not reported"
+   ],
+   "communication": [
+    "Not reported"
+   ],
+   "deployment_tech": [
+    "Not reported"
+   ],
+   "quality_attributes": [
+    "Latency",
+    "Accuracy",
+    "Throughput"
+   ],
+   "privacy_approach": [
+    "None"
+   ],
+   "explainability_approach": "None",
+   "inference_location": [
+    "Device",
+    "Edge"
+   ],
+   "training_location": [
+    "Not reported"
+   ],
+   "allocation_strategy": [
+    "Optimisation-based at runtime"
+   ],
+   "validation_method": [
+    "Lab testbed"
+   ],
+   "baseline": "Other architecture (device-only and edge-only execution)",
+   "code_available": "No",
+   "dataset_public": "Yes",
+   "setup_fully_described": "Yes"
+  },
+  "evidence": {
+   "styles": "No architectural style named; Fig. 5 shows offline configuration / online tuning / co-inference stages",
+   "allocation_strategy": "Static: regression latency models + search for exit/partition point (Alg. 1); dynamic: Bayesian online change point detection maps bandwidth state to precomputed optimal configuration (reward exp(acc)+throughput under latency constraint)",
+   "validation_method": "Prototype on Raspberry Pi 3 (device) and desktop PC (edge), AlexNet/BranchyNet on CIFAR-10, Belgium 4G/LTE bandwidth traces"
+  },
+  "hard_to_decide": [
+   "IC1/EC5: strongly algorithmic (partitioning + early exit) but has a framework with named components and device/edge roles; included",
+   "IoT component is a generic mobile/IoT device (Raspberry Pi), no IoT domain",
+   "training_location: branchy model trained offline, location not stated",
+   "energy explicitly out of scope (footnote 1)"
+  ]
+ },
+ {
+  "n": 7,
+  "doi": "10.1109/SEAA51224.2020.00015",
+  "full_text_read": false,
+  "source_url": "https://research.chalmers.se/en/publication/520996 (abstract only; Semantic Scholar: closed access)",
+  "decision": "include",
+  "criteria_failed": [],
+  "decision_reason": "Proposes a framework of five architectural alternatives for edge/cloud (re)training with transfer learning in embedded/IoT systems (SEAA 2020); IC3 cannot be verified from the abstract.",
+  "quality": {
+   "Q1": 1,
+   "Q2": 0.5,
+   "Q3": 1,
+   "Q4": 0,
+   "Q5": 0,
+   "Q6": 0,
+   "Q7": 1,
+   "Q8": 1,
+   "Q9": 0,
+   "Q10": 0
+  },
+  "quality_total": 4.5,
+  "extraction": {
+   "domain": [
+    "Industry/IIoT"
+   ],
+   "contribution_type": [
+    "Framework",
+    "Design pattern"
+   ],
+   "styles": [
+    "Not reported"
+   ],
+   "communication": [
+    "Not reported"
+   ],
+   "deployment_tech": [
+    "Not reported"
+   ],
+   "quality_attributes": [
+    "Not reported"
+   ],
+   "privacy_approach": [
+    "Not reported"
+   ],
+   "explainability_approach": "Not reported",
+   "inference_location": [
+    "Edge"
+   ],
+   "training_location": [
+    "Edge",
+    "Cloud"
+   ],
+   "allocation_strategy": [
+    "Fixed at design time"
+   ],
+   "validation_method": [
+    "Example scenario"
+   ],
+   "baseline": "None",
+   "code_available": "No",
+   "dataset_public": "Not reported",
+   "setup_fully_described": "No"
+  },
+  "evidence": {
+   "styles": "Abstract: alternatives 'ranging from a centralized architecture where (re)training is given priority to a decentralized architecture where edge (re)training is given priority'; no style named",
+   "allocation_strategy": "Choice among alternatives made by practitioners based on task intent, data amount, edge-to-cloud transfer, resources (design-time)",
+   "validation_method": "Action research in one company + qualitative interview study with four case companies; no measured results"
+  },
+  "hard_to_decide": [
+   "Full text not accessible (IEEE closed); EC7 flagged",
+   "IC3: unclear from abstract whether each alternative has a diagram/components",
+   "contribution_type: 'architectural alternatives' could be read as design patterns or a reference framework",
+   "validation_method: qualitative interviews do not fit value set; coded as Example scenario",
+   "domain: embedded-systems companies (industrial) vs Generic"
+  ]
+ },
+ {
+  "n": 8,
+  "doi": "10.1016/j.procs.2020.07.006",
+  "full_text_read": true,
+  "source_url": "https://orbi.umons.ac.be/bitstream/20.500.12907/42290/1/1-s2.0-S1877050920316859-main(1).pdf",
+  "decision": "include",
+  "criteria_failed": [],
+  "decision_reason": "Edge architecture (Kubernetes/Docker on Jetson Nano + Odroid N2, MQTT to cloud) for deploying microservices and TFLite AI models at the edge, with diagrams; Procedia CS (MobiSPC 2020), pp. 10-19.",
+  "quality": {
+   "Q1": 1,
+   "Q2": 0.5,
+   "Q3": 1,
+   "Q4": 1,
+   "Q5": 1,
+   "Q6": 1,
+   "Q7": 1,
+   "Q8": 0.5,
+   "Q9": 0.5,
+   "Q10": 0.5
+  },
+  "quality_total": 8.0,
+  "extraction": {
+   "domain": [
+    "Generic",
+    "Agriculture"
+   ],
+   "contribution_type": [
+    "Concrete architecture"
+   ],
+   "styles": [
+    "Microservices"
+   ],
+   "communication": [
+    "MQTT"
+   ],
+   "deployment_tech": [
+    "Docker",
+    "Kubernetes",
+    "TensorFlow Lite",
+    "NVIDIA JetPack/TensorRT"
+   ],
+   "quality_attributes": [
+    "Latency",
+    "Scalability",
+    "Availability/Resilience",
+    "Accuracy"
+   ],
+   "privacy_approach": [
+    "None"
+   ],
+   "explainability_approach": "None",
+   "inference_location": [
+    "Edge",
+    "Cloud"
+   ],
+   "training_location": [
+    "Cloud",
+    "Edge"
+   ],
+   "allocation_strategy": [
+    "Fixed at design time",
+    "Rule-based at runtime"
+   ],
+   "validation_method": [
+    "Lab testbed"
+   ],
+   "baseline": "Monolith or cloud-only (cloud h5 models vs edge TFLite models)",
+   "code_available": "No",
+   "dataset_public": "Yes",
+   "setup_fully_described": "Partly"
+  },
+  "evidence": {
+   "styles": "'deploy at edge level micro services'; Kubernetes master/worker cluster with Docker containers (Figs. 1-2)",
+   "allocation_strategy": "Kubernetes scheduler places pods by resource requirements/affinity; placement fixed via pod config files or node labels",
+   "validation_method": "Cluster of 3 Jetson Nano + 4 Odroid N2; PlantVillage leaf-disease models (EfficientNet, MobileNet, DenseNet121...) compared cloud (Tesla P100) vs edge TFLite on 443 test images: accuracy, model size, prediction time"
+  },
+  "hard_to_decide": [
+   "training_location: experiments train in cloud; architecture claims Jetson Nano edge training (not evaluated)",
+   "inference_location: Cloud included because split-DNN design and cloud comparison",
+   "allocation_strategy: static config vs Kubernetes runtime scheduling",
+   "Q9: measurements are of models, not of the architecture's latency/jitter (motivating goals not measured)",
+   "domain: generic AIoT, plant-disease test case"
+  ]
+ },
+ {
+  "n": 9,
+  "doi": "10.1109/IC2E52221.2021.00034",
+  "full_text_read": false,
+  "source_url": "https://cris.vtt.fi/en/publications/edge-mlops-an-automation-framework-for-aiot-applications/ (abstract only; IEEE closed)",
+  "decision": "include",
+  "criteria_failed": [],
+  "decision_reason": "Edge MLOps framework combining cloud and edge for continuous training, deployment and monitoring of ML models for AIoT, validated on air-quality forecasting (IC2E 2021, pp. 191-200); IC3 unverified.",
+  "quality": {
+   "Q1": 1,
+   "Q2": 0.5,
+   "Q3": 0.5,
+   "Q4": 0,
+   "Q5": 0,
+   "Q6": 0,
+   "Q7": 0.5,
+   "Q8": 0,
+   "Q9": 0.5,
+   "Q10": 0
+  },
+  "quality_total": 3.0,
+  "extraction": {
+   "domain": [
+    "Generic",
+    "Other"
+   ],
+   "contribution_type": [
+    "Framework"
+   ],
+   "styles": [
+    "Not reported"
+   ],
+   "communication": [
+    "Not reported"
+   ],
+   "deployment_tech": [
+    "Not reported"
+   ],
+   "quality_attributes": [
+    "Availability/Resilience",
+    "Accuracy",
+    "Maintainability"
+   ],
+   "privacy_approach": [
+    "Not reported"
+   ],
+   "explainability_approach": "Not reported",
+   "inference_location": [
+    "Edge"
+   ],
+   "training_location": [
+    "Not reported"
+   ],
+   "allocation_strategy": [
+    "Not reported"
+   ],
+   "validation_method": [
+    "Not reported"
+   ],
+   "baseline": "None",
+   "code_available": "No",
+   "dataset_public": "Not reported",
+   "setup_fully_described": "No"
+  },
+  "evidence": {
+   "styles": "Abstract only: 'we synergize cloud and edge environments'; no style stated",
+   "allocation_strategy": "Not reported; only a retraining/redeploy trigger when performance falls 'under a certain threshold' (rule-based MLOps trigger, not placement)",
+   "validation_method": "'We experimentally validate our framework on a forecasting air quality situation' - setup type not stated in abstract"
+  },
+  "hard_to_decide": [
+   "Full text not accessible (IEEE closed; arXiv 2101.04414 is a different earlier paper by Raj et al., not used); EC7 flagged",
+   "IC3 unverifiable from abstract",
+   "training_location: cloud vs edge split for training not stated",
+   "validation_method: could be real deployment (air-quality sensors) but abstract does not say"
+  ]
+ },
+ {
+  "n": 10,
+  "doi": "10.1016/j.compeleceng.2021.107227",
+  "full_text_read": false,
+  "source_url": "https://scholars.ncu.edu.tw/en/publications/a-35-tier-container-based-edge-computing-architecture/ (abstract only; ScienceDirect blocked)",
+  "decision": "include",
+  "criteria_failed": [],
+  "decision_reason": "Proposes the 3.5-tier ECAIoT architecture (microservices, containers, hardware AI engine, IoT protocol on gateways) with experimental results; Computers & Electrical Engineering 2021; IC3 judged from abstract only.",
+  "quality": {
+   "Q1": 1,
+   "Q2": 0.5,
+   "Q3": 1,
+   "Q4": 0,
+   "Q5": 0.5,
+   "Q6": 1,
+   "Q7": 0.5,
+   "Q8": 0.5,
+   "Q9": 1,
+   "Q10": 0
+  },
+  "quality_total": 6.0,
+  "extraction": {
+   "domain": [
+    "Generic"
+   ],
+   "contribution_type": [
+    "Concrete architecture"
+   ],
+   "styles": [
+    "Layered",
+    "Microservices"
+   ],
+   "communication": [
+    "Not reported"
+   ],
+   "deployment_tech": [
+    "Containers (unspecified)"
+   ],
+   "quality_attributes": [
+    "Latency",
+    "Throughput",
+    "Scalability"
+   ],
+   "privacy_approach": [
+    "Not reported"
+   ],
+   "explainability_approach": "Not reported",
+   "inference_location": [
+    "Edge"
+   ],
+   "training_location": [
+    "Not reported"
+   ],
+   "allocation_strategy": [
+    "Rule-based at runtime"
+   ],
+   "validation_method": [
+    "Not reported"
+   ],
+   "baseline": "Not reported",
+   "code_available": "No",
+   "dataset_public": "Not reported",
+   "setup_fully_described": "No"
+  },
+  "evidence": {
+   "styles": "'3.5-tier ... architecture was developed based on microservices, containers, hardware artificial intelligence engine technology, and an IoT protocol'",
+   "allocation_strategy": "'request-based load balancing architecture of ECAIoT results in better performance'",
+   "validation_method": "'Experimental results indicate ... better performance in terms of response time and processing speed' - testbed type not stated"
+  },
+  "hard_to_decide": [
+   "Full text not accessible (Elsevier, robots-blocked) though Semantic Scholar lists it as hybrid OA CC BY-NC-ND; EC7 flagged",
+   "IC1: AI part is a 'hardware AI engine' - unclear how much ML software architecture is described",
+   "inference_location: AI engine assumed on gateway (added hardware layer), not confirmed",
+   "IoT protocol not named in abstract",
+   "baseline: possibly the original FECIoT or other load-balancing schemes, not stated"
+  ]
+ }
+]
