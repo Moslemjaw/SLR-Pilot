@@ -18,8 +18,11 @@ AI = ['AI', '"artificial intelligence"', '"machine learning"', '"deep learning"'
 IOT = ['IoT', '"Internet of Things"', 'IIoT', 'IoMT', '"cyber-physical system"']
 ARCH = ['architecture', 'microservice', 'microservices', '"service-oriented"', 'serverless',
         '"design pattern"', '"model-driven"', 'framework']
-EDGE = ['edge', 'fog', '"cloud-edge"', '"edge-cloud"', '"cloud continuum"', '"compute continuum"',
-        'osmotic', 'federated', '"on-device"']
+EDGE = ['"edge computing"', '"edge device"', '"edge devices"', '"edge node"', '"edge nodes"', '"edge server"',
+        '"edge servers"', '"edge intelligence"', '"edge AI"', '"edge-cloud"', '"cloud-edge"', 'fog', 'continuum',
+        'osmotic', '"federated learning"', '"on-device"']
+EDGE_WIDE = ['edge', 'fog', '"cloud-edge"', '"edge-cloud"', '"cloud continuum"', '"compute continuum"',
+             'osmotic', 'federated', '"on-device"']
 G = lambda terms: "(" + " OR ".join(terms) + ")"
 OPENALEX_QUERIES = {   # split in two so each query stays short; results are merged
     "OA-1 AIoT terms": f"{G(AIOT)} AND {G(ARCH)} AND {G(EDGE)}",
@@ -51,7 +54,7 @@ def abstract_from_index(inv):
 def openalex(name, query):
     rows, cursor, page = [], "*", 0
     base = "https://api.openalex.org/works?"
-    params = {"filter": f"title_and_abstract.search:{query},publication_year:>{YEAR_FROM - 1}",
+    params = {"filter": f"title_and_abstract.search:{query},publication_year:>{YEAR_FROM - 1},type:article,primary_topic.field.id:17|22",
               "per_page": 200, "mailto": MAILTO,
               "select": "id,doi,display_name,publication_year,type,primary_location,abstract_inverted_index,cited_by_count,language"}
     if os.environ.get("OPENALEX_API_KEY"): params["api_key"] = os.environ["OPENALEX_API_KEY"]
@@ -74,13 +77,16 @@ def openalex(name, query):
 # Semantic Scholar bulk search syntax: + AND, | OR, "phrase", ( ), * prefix wildcard
 S2 = lambda terms: "(" + " | ".join(terms) + ")"
 S2_ARCH = ['architect*', 'microservice*', '"service-oriented"', 'serverless', '"design pattern"', '"model-driven"', 'framework*']
-S2_QUERY = f"({S2(AIOT)} | ({S2(AI)} + {S2(IOT)})) + {S2(S2_ARCH)} + {S2(EDGE)}"
+S2_EDGE = EDGE
+S2_QUERY = f"({S2(AIOT)} | ({S2(AI)} + {S2(IOT)})) + {S2(S2_ARCH)} + {S2(S2_EDGE)}"
 
 def semantic_scholar():
     rows, token, first = [], None, True
     headers = {"x-api-key": os.environ["S2_API_KEY"]} if os.environ.get("S2_API_KEY") else {}
     while True:
-        p = {"query": S2_QUERY, "year": f"{YEAR_FROM}-", "fields": "title,abstract,year,venue,externalIds,publicationTypes,citationCount"}
+        p = {"query": S2_QUERY, "year": f"{YEAR_FROM}-", "fieldsOfStudy": "Computer Science,Engineering",
+             "publicationTypes": "JournalArticle,Conference",
+             "fields": "title,abstract,year,venue,externalIds,publicationTypes,citationCount"}
         if token: p["token"] = token
         data = get_json("https://api.semanticscholar.org/graph/v1/paper/search/bulk?" + urllib.parse.urlencode(p), headers)
         if first: log(f"S2: Semantic Scholar reports {data.get('total')} records"); first = False
@@ -98,8 +104,31 @@ def semantic_scholar():
 
 def norm_title(t): return re.sub(r"[^a-z0-9]", "", (t or "").lower())
 
+def count_only():
+    rows = []
+    for label, edge in (("wide edge terms", EDGE_WIDE), ("narrow edge terms (protocol v1.2)", EDGE)):
+        for qn, q in ((f"AIoT terms", f"{G(AIOT)} AND {G(ARCH)} AND {G(edge)}"),
+                      (f"AI + IoT", f"{G(AI)} AND {G(IOT)} AND {G(ARCH)} AND {G(edge)}")):
+            for filt, extra in (("all fields", ""), ("CS/Eng articles", ",type:article,primary_topic.field.id:17|22")):
+                url = "https://api.openalex.org/works?" + urllib.parse.urlencode({
+                    "filter": f"title_and_abstract.search:{q},publication_year:>{YEAR_FROM - 1}{extra}",
+                    "per_page": 1, "select": "id", "mailto": MAILTO})
+                try: n = get_json(url)["meta"]["count"]
+                except Exception as e: n = f"error {e}"
+                rows.append((label, qn, filt, n)); log(f"COUNT OpenAlex | {label} | {qn} | {filt}: {n}")
+                time.sleep(0.5)
+    p = {"query": S2_QUERY, "year": f"{YEAR_FROM}-", "fieldsOfStudy": "Computer Science,Engineering",
+         "publicationTypes": "JournalArticle,Conference", "fields": "title"}
+    try: log(f"COUNT Semantic Scholar | narrow | CS/Eng: {get_json('https://api.semanticscholar.org/graph/v1/paper/search/bulk?' + urllib.parse.urlencode(p)).get('total')}")
+    except Exception as e: log(f"COUNT Semantic Scholar failed: {e}")
+
+if __name__ == "__main__" and "--count" in sys.argv:
+    count_only(); sys.exit(0)
+
 if __name__ == "__main__":
-    log("=== Search started. Protocol string v1.1 (Section 3.2) ===")
+    if not os.environ.get("OPENALEX_API_KEY"):
+        log("NOTE: no OPENALEX_API_KEY set - OpenAlex will stop after the first page. Get a free key at https://openalex.org/settings/api")
+    log("=== Search started. Protocol string v1.2 (Section 3.2, narrowed edge group) ===")
     allrows = []
     for name, q in OPENALEX_QUERIES.items():
         log(f"{name} query: {q}")
